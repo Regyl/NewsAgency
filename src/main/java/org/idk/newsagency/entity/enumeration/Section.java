@@ -1,5 +1,9 @@
 package org.idk.newsagency.entity.enumeration;
 
+import lombok.Data;
+import lombok.Getter;
+
+@Getter
 public enum Section {
     HPU("ЖКХ"),
     EVENTS("События"),

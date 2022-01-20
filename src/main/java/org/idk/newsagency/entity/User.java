@@ -5,6 +5,7 @@ import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.Set;
 import java.util.UUID;
 
 @Data
@@ -31,4 +32,10 @@ public class User extends AbstractEntity {
     @NotNull
     @Column(nullable = false)
     private String patronymic;
+
+    @OneToMany(orphanRemoval = true)
+    private Set<Announcement> announcements;
+
+    @OneToMany
+    private Set<Announcement> likedAnnouncements;
 }
