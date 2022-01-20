@@ -15,11 +15,11 @@ public class AnnouncementMapper {
         this.mapper = mapper;
     }
 
-    public Announcement toEntity(AnnouncementDto dto) {
+    public Announcement map(AnnouncementDto dto) {
         return mapper.map(dto, Announcement.class);
     }
 
-    public AnnouncementDtoResponse toDto(Announcement announcement) {
+    public AnnouncementDtoResponse map(Announcement announcement) {
         return mapper.map(announcement, AnnouncementDtoResponse.class);
     }
 }
