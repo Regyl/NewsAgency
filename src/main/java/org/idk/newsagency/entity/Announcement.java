@@ -38,4 +38,8 @@ public class Announcement extends AbstractEntity {
 
     @Column(columnDefinition = "TEXT")
     private String image;
+
+    @NotNull
+    @Column(nullable = false)
+    private Location location;
 }
