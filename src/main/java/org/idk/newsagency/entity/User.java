@@ -41,7 +41,7 @@ public class User extends AbstractEntity implements UserDetails {
     @OneToMany(orphanRemoval = true)
     private Set<Announcement> announcements;
 
-    @OneToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     private Set<Announcement> likedAnnouncements;
 
     @ManyToMany(fetch = FetchType.EAGER)
