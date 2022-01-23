@@ -32,7 +32,8 @@ public class AnnouncementMapper extends AbstractMapper<Announcement, Announcemen
             log.warning(e.getMessage());
         }
 
-        announcement.setLocation(new Location(dto.getLatitude(), dto.getLongitude()));
+        Location location = new Location(dto.getLatitude(), dto.getLongitude());
+        announcement.setLocation(location);
         announcement.setUser(Utils.getAuthenticatedUser());
         return announcement;
     }

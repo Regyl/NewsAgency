@@ -5,6 +5,7 @@ import org.idk.newsagency.entity.enumeration.Role;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
+import java.util.UUID;
 import java.util.function.Supplier;
 
 @Log
@@ -19,8 +20,14 @@ public class EntityNotFoundException extends RuntimeException {
         return () -> new EntityNotFoundException(id);
     }
 
+    public static Supplier<EntityNotFoundException> supplierOf(UUID id) {
+        return () -> new EntityNotFoundException(id.toString());
+    }
+
     public EntityNotFoundException(String id) {
         super(obtainMessage(id));
         log.warning(obtainMessage(id));
     }
+
+
 }
