@@ -1,4 +1,4 @@
-package org.idk.newsagency.api.controller.dto.reponse;
+package org.idk.newsagency.api.controller.dto.response;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;

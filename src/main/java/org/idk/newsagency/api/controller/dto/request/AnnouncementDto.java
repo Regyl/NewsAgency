@@ -1,9 +1,9 @@
 package org.idk.newsagency.api.controller.dto.request;
 
 import lombok.Data;
-import org.idk.newsagency.entity.Location;
 import org.idk.newsagency.entity.enumeration.Section;
 import org.idk.newsagency.entity.enumeration.Status;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.NotNull;
 
@@ -26,8 +26,24 @@ public class AnnouncementDto {
     private String text;
 
     @NotNull
-    private String image;
+    private MultipartFile image;
 
     @NotNull
-    private Location location;
+    private Long latitude;
+
+    @NotNull
+    private Long longitude;
+
+    /*@JsonIgnore TODO:
+    private LocationDto location;
+
+    @Data
+    static final class LocationDto {
+
+        @NotNull
+        private Long latitude;
+
+        @NotNull
+        private Long longitude;
+    }*/
 }

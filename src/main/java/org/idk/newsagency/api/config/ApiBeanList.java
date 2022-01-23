@@ -1,7 +1,6 @@
 package org.idk.newsagency.api.config;
 
 import org.modelmapper.ModelMapper;
-import org.springdoc.core.SpringDocUtils;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
