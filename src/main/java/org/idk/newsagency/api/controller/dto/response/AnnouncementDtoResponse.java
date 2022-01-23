@@ -3,6 +3,7 @@ package org.idk.newsagency.api.controller.dto.response;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.idk.newsagency.entity.Location;
+import org.idk.newsagency.entity.User;
 import org.idk.newsagency.entity.enumeration.Section;
 import org.idk.newsagency.entity.enumeration.Status;
 
@@ -24,8 +25,10 @@ public class AnnouncementDtoResponse extends AbstractDtoResponse {
 
     private String text;
 
-    private String image;
+    private byte[] image;
 
     private Location location;
+
+    private UserDtoResponse user;
 
 }

@@ -44,7 +44,7 @@ public class User extends AbstractEntity implements UserDetails {
     @OneToMany
     private Set<Announcement> likedAnnouncements;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     private Set<Authority> authorities;
 
     @CreationTimestamp

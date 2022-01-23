@@ -1,12 +1,14 @@
 package org.idk.newsagency.api.mapper;
 
 import lombok.extern.java.Log;
+import org.idk.newsagency.Utils;
 import org.idk.newsagency.annotation.Mapper;
 import org.idk.newsagency.api.controller.dto.response.AnnouncementDtoResponse;
 import org.idk.newsagency.api.controller.dto.request.AnnouncementDto;
 import org.idk.newsagency.entity.Announcement;
 import org.idk.newsagency.entity.Location;
 import org.modelmapper.ModelMapper;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import java.io.IOException;
 import java.util.Base64;
@@ -14,8 +16,6 @@ import java.util.Base64;
 @Log
 @Mapper
 public class AnnouncementMapper extends AbstractMapper<Announcement, AnnouncementDto> {
-
-    private static final Base64.Encoder ENCODER = Base64.getEncoder();
 
     public AnnouncementMapper(ModelMapper mapper) {
         super(mapper);
@@ -26,17 +26,21 @@ public class AnnouncementMapper extends AbstractMapper<Announcement, Announcemen
         Announcement announcement = mapper.map(dto, Announcement.class);
 
         try {
-            announcement.setImage(ENCODER.encodeToString(dto.getImage().getBytes()));
+            String image = Base64.getEncoder().encodeToString(dto.getImage().getBytes());
+            announcement.setImage(image);
         } catch (IOException e) {
             log.warning(e.getMessage());
         }
 
         announcement.setLocation(new Location(dto.getLatitude(), dto.getLongitude()));
+        announcement.setUser(Utils.getAuthenticatedUser());
         return announcement;
     }
 
     @Override
     public AnnouncementDtoResponse toDto(Announcement announcement) {
-        return mapper.map(announcement, AnnouncementDtoResponse.class);
+        AnnouncementDtoResponse response = mapper.map(announcement, AnnouncementDtoResponse.class);
+        response.setImage(Base64.getDecoder().decode(announcement.getImage()));
+        return response;
     }
 }

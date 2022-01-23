@@ -6,8 +6,6 @@ import org.idk.newsagency.exception.EntityNotFoundException;
 import org.idk.newsagency.repository.AuthorityRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.function.Function;
-
 @Service
 public class AuthorityService {
 
@@ -19,6 +17,6 @@ public class AuthorityService {
 
     public Authority findByRole(Role role) {
         return repository.findByRole(role)
-                .orElseThrow(() -> new EntityNotFoundException(role.name())); //TODO: custom supplier or etc
+                .orElseThrow(EntityNotFoundException.supplierOf(role.name()));
     }
 }

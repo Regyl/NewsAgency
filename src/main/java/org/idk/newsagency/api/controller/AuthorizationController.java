@@ -37,7 +37,7 @@ public class AuthorizationController {
         this.userMapper = userMapper;
     }
 
-    @GetMapping("/")
+    @PostMapping("/sign-in")
     @Operation(summary = "Authorization")
     public CredentialsResponse signIn(@RequestBody Credentials credentials) {
         Authentication auth = new UsernamePasswordAuthenticationToken(credentials.getLogin(), credentials.getPassword());
@@ -46,7 +46,7 @@ public class AuthorizationController {
         return CredentialsResponse.of(token);
     }
 
-    @PostMapping("/")
+    @PostMapping("/sign-up")
     @Operation(summary = "Registration")
     public UserDtoResponse signUp(@RequestBody UserDto dto) {
         User user = userMapper.toEntity(dto);

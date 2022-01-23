@@ -10,15 +10,6 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-/*@Configuration
-public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
-
-    @Override
-    public void configure(WebSecurity web) {
-        web.ignoring().antMatchers("/**");
-    }
-}*/
-
 @Configuration
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
@@ -38,6 +29,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers(
                         "/sign-in"
                 ).permitAll()
+                .antMatchers("/announcements/**").hasAnyAuthority(Role.ADMIN.name())
 //                .antMatchers(HttpMethod.GET).hasAnyAuthority(Role.ADMIN.name())
 //                .antMatchers(HttpMethod.POST).hasAnyAuthority(Role.ADMIN.name())
 //                .antMatchers(HttpMethod.PUT).hasAnyAuthority(Role.ADMIN.name())

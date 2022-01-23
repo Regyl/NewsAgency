@@ -1,6 +1,7 @@
 package org.idk.newsagency.service;
 
 import org.idk.newsagency.entity.User;
+import org.idk.newsagency.exception.EntityNotFoundException;
 import org.idk.newsagency.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +16,7 @@ public class UserService {
 
     public User findByLogin(String login) {
         return repository.findByLogin(login)
-                .orElseThrow();
+                .orElseThrow(EntityNotFoundException.supplierOf(login));
     }
 
     public User save(User user) {

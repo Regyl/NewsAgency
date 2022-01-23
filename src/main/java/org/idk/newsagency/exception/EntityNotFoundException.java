@@ -15,6 +15,10 @@ public class EntityNotFoundException extends RuntimeException {
         return String.format("Entity with id %s not found", id);
     }
 
+    public static Supplier<EntityNotFoundException> supplierOf(String id) {
+        return () -> new EntityNotFoundException(id);
+    }
+
     public EntityNotFoundException(String id) {
         super(obtainMessage(id));
         log.warning(obtainMessage(id));

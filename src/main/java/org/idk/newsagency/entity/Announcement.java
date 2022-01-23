@@ -41,6 +41,6 @@ public class Announcement extends AbstractEntity {
     private Location location;
 
     @OneToOne
-//    @NotNull TODO
+    @NotNull
     private User user;
 }
