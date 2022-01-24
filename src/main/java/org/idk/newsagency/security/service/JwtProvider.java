@@ -30,7 +30,7 @@ public class JwtProvider {
     private final CustomUserDetailsService userDetailsService;
 
     public JwtProvider(@Value("${jwt.secret}") String jwtSecret,
-                       @Value("${tokenLifetime}") Long tokenLifetime,
+                       @Value("${tokenLifetime}") Long tokenLifetime, //in minutes
                        CustomUserDetailsService userDetailsService) {
         this.tokenLifetime = tokenLifetime;
 
