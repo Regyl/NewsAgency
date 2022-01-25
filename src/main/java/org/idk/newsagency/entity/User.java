@@ -54,7 +54,7 @@ public class User extends AbstractEntity implements UserDetails {
     private LocalDateTime updateTimestamp;
 
     @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
+    public Set<Authority> getAuthorities() {
         return authorities;
     }
 

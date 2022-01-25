@@ -1,6 +1,7 @@
 package org.idk.newsagency.service;
 
 import org.idk.newsagency.entity.Announcement;
+import org.idk.newsagency.entity.enumeration.Status;
 import org.idk.newsagency.exception.EntityNotFoundException;
 import org.idk.newsagency.repository.AnnouncementRepository;
 import org.springframework.data.domain.Page;
@@ -18,7 +19,7 @@ public class AnnouncementService {
         this.repository = repository;
     }
 
-    public Announcement create(Announcement announcement) {
+    public Announcement save(Announcement announcement) {
         return repository.save(announcement);
     }
 

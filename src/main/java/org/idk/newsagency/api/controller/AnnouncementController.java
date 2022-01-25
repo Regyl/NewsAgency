@@ -8,6 +8,8 @@ import org.idk.newsagency.api.controller.dto.request.AnnouncementDto;
 import org.idk.newsagency.api.mapper.AnnouncementMapper;
 import org.idk.newsagency.entity.Announcement;
 import org.idk.newsagency.entity.User;
+import org.idk.newsagency.entity.enumeration.Role;
+import org.idk.newsagency.entity.enumeration.Status;
 import org.idk.newsagency.service.AnnouncementService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -35,7 +37,7 @@ public class AnnouncementController {
     @Operation(summary = "Create announcement")
     public AnnouncementDtoResponse create(AnnouncementDto dto) {
         Announcement announcement = mapper.toEntity(dto);
-        announcement = service.create(announcement);
+        announcement = service.save(announcement);
         return mapper.toDto(announcement);
     }
 
@@ -46,12 +48,22 @@ public class AnnouncementController {
                 .map(mapper::toDto);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/likes/{id}")
     @Operation(summary = "Like announcement")
     public AnnouncementDtoResponse likeAnnouncement(@PathVariable UUID id) {
         Announcement announcement = service.findById(id);
         User user = Utils.getAuthenticatedUser();
         user.getLikedAnnouncements().add(announcement);
+        return mapper.toDto(announcement);
+    }
+
+    @PutMapping("/moderation")
+    @Operation(summary = "Update announcement status")
+    public AnnouncementDtoResponse changeAnnotationStatus(@RequestParam UUID id, @RequestParam Status status) {
+        Utils.isUserHaveRights(Role.MODERATOR); //checking user rights
+        Announcement announcement = service.findById(id);
+        announcement.setStatus(status);
+        announcement = service.save(announcement);
         return mapper.toDto(announcement);
     }
 }
