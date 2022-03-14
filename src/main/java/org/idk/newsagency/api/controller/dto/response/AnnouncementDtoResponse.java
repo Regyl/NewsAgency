@@ -3,7 +3,6 @@ package org.idk.newsagency.api.controller.dto.response;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.idk.newsagency.entity.Location;
-import org.idk.newsagency.entity.User;
 import org.idk.newsagency.entity.enumeration.Section;
 import org.idk.newsagency.entity.enumeration.Status;
 

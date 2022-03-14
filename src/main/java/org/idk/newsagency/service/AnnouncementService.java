@@ -1,7 +1,6 @@
 package org.idk.newsagency.service;
 
 import org.idk.newsagency.entity.Announcement;
-import org.idk.newsagency.entity.enumeration.Status;
 import org.idk.newsagency.exception.EntityNotFoundException;
 import org.idk.newsagency.repository.AnnouncementRepository;
 import org.springframework.data.domain.Page;

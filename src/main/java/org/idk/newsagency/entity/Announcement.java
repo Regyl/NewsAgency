@@ -4,7 +4,11 @@ import lombok.Data;
 import org.idk.newsagency.entity.enumeration.Section;
 import org.idk.newsagency.entity.enumeration.Status;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
 
 @Data

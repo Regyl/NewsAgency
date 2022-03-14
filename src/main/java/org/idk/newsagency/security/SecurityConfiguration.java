@@ -3,7 +3,6 @@ package org.idk.newsagency.security;
 import org.idk.newsagency.entity.enumeration.Role;
 import org.idk.newsagency.security.filter.JwtFilter;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;

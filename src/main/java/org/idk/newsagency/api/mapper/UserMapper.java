@@ -1,8 +1,8 @@
 package org.idk.newsagency.api.mapper;
 
 import org.idk.newsagency.annotation.Mapper;
-import org.idk.newsagency.api.controller.dto.response.UserDtoResponse;
 import org.idk.newsagency.api.controller.dto.request.UserDto;
+import org.idk.newsagency.api.controller.dto.response.UserDtoResponse;
 import org.idk.newsagency.entity.Authority;
 import org.idk.newsagency.entity.User;
 import org.idk.newsagency.service.AuthorityService;

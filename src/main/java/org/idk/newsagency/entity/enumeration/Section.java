@@ -2,6 +2,8 @@ package org.idk.newsagency.entity.enumeration;
 
 import lombok.Getter;
 
+import java.util.stream.Stream;
+
 @Getter
 public enum Section {
     HPU("ЖКХ"),
@@ -17,5 +19,9 @@ public enum Section {
 
     Section(String translation) {
         this.translation = translation;
+    }
+
+    public static Stream<Section> toStream() {
+        return Stream.of(Section.values());
     }
 }
