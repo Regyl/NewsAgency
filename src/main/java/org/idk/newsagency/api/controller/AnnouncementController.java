@@ -72,7 +72,8 @@ public class AnnouncementController {
 
     @PutMapping("/moderation")
     @Operation(summary = "Update announcement status")
-    public AnnouncementDtoResponse changeAnnotationStatus(@RequestParam UUID id, @RequestParam Status status) {
+    public AnnouncementDtoResponse changeAnnotationStatus(@RequestParam UUID id,
+                                                          @RequestParam Status status) {
         Utils.isUserHaveRights(Role.MODERATOR); //checking user rights
         Announcement announcement = service.findById(id);
         announcement.setStatus(status);
