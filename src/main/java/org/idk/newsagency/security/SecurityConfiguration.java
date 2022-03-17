@@ -3,6 +3,7 @@ package org.idk.newsagency.security;
 import org.idk.newsagency.entity.enumeration.Role;
 import org.idk.newsagency.security.filter.JwtFilter;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -28,10 +29,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers(
                         "/sign-in"
                 ).permitAll()
-                .antMatchers("/announcements/**").hasAnyAuthority(Role.ADMIN.name())
-//                .antMatchers(HttpMethod.GET).hasAnyAuthority(Role.ADMIN.name())
-//                .antMatchers(HttpMethod.POST).hasAnyAuthority(Role.ADMIN.name())
-//                .antMatchers(HttpMethod.PUT).hasAnyAuthority(Role.ADMIN.name())
+                .antMatchers(HttpMethod.DELETE, "/announcements/**").hasAnyAuthority(Role.ADMIN.name())
+                .antMatchers(HttpMethod.POST, "/announcements/**").hasAnyAuthority(Role.ADMIN.name())
+                .antMatchers(HttpMethod.PUT, "/announcements/**").hasAnyAuthority(Role.ADMIN.name())
                 .and()
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
     }

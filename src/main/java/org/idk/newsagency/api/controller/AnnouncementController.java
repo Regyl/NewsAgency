@@ -55,10 +55,11 @@ public class AnnouncementController {
     }
 
     @GetMapping("/")
-    @Operation(summary = "Return announcements by pages")
-    public Page<AnnouncementDtoResponse> findByPageable(@RequestBody Pageable pageable) {
-        return service.findByPageable(pageable)
-                .map(mapper::toDto);
+    @Operation(summary = "Return all announcements")
+    public List<AnnouncementDtoResponse> findByPageable() {
+        return service.findAll().stream()
+                .map(mapper::toDto)
+                .toList();
     }
 
     @PutMapping("/likes/{id}")
@@ -74,7 +75,7 @@ public class AnnouncementController {
     @Operation(summary = "Update announcement status")
     public AnnouncementDtoResponse changeAnnotationStatus(@RequestParam UUID id,
                                                           @RequestParam Status status) {
-        Utils.isUserHaveRights(Role.MODERATOR); //checking user rights
+        Utils.isUserHaveRights(Role.MODERATOR); //checking user rights TODO:
         Announcement announcement = service.findById(id);
         announcement.setStatus(status);
         announcement = service.save(announcement);

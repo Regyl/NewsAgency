@@ -7,6 +7,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -29,5 +30,9 @@ public class AnnouncementService {
     public Announcement findById(UUID id) {
         return repository.findById(id)
                 .orElseThrow(EntityNotFoundException.supplierOf(id));
+    }
+
+    public List<Announcement> findAll() {
+        return repository.findAll();
     }
 }
