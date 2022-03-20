@@ -22,8 +22,5 @@ public class UserDto {
     private String lastName;
 
     @NotNull
-    private String patronymic;
-
-    @NotNull
     private Set<Role> authorities;
 }

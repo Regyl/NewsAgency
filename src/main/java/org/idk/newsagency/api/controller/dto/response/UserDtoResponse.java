@@ -19,13 +19,12 @@ public class UserDtoResponse extends AbstractDtoResponse {
 
     private String lastName;
 
-    private String patronymic;
-
     private Set<AuthorityDtoResponse> authorities;
 
     @Data
     private static class AuthorityDtoResponse {
 
         private Role role;
+
     }
 }

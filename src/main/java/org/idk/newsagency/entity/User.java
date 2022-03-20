@@ -36,10 +36,6 @@ public class User extends AbstractEntity implements UserDetails {
     @Column(nullable = false)
     private String lastName;
 
-    @NotNull
-    @Column(nullable = false)
-    private String patronymic;
-
     @OneToMany(orphanRemoval = true)
     private Set<Announcement> announcements;
 
