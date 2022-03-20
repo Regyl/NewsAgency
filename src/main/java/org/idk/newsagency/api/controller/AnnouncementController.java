@@ -20,11 +20,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.util.HashMap;
 import java.util.List;
@@ -47,7 +49,7 @@ public class AnnouncementController {
     @PostMapping(value = "/", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
     @ResponseStatus(HttpStatus.CREATED)
     @Operation(summary = "Create announcement")
-    public AnnouncementDtoResponse create(AnnouncementDto dto) {
+    public AnnouncementDtoResponse create(@RequestBody @Valid AnnouncementDto dto) {
         Announcement announcement = mapper.toEntity(dto);
         announcement = service.save(announcement);
         return mapper.toDto(announcement);
@@ -89,10 +91,7 @@ public class AnnouncementController {
 
     @GetMapping("/sections")
     @Operation(summary = "List of sections")
-    public Map<String, String> getAllSections() {
-        Map<String, String> response = new HashMap<>();
-        Section.toStream()
-                .forEach(item -> response.put(item.name(), item.getTranslation()));
-        return response;
+    public List<Section> getAllSections() {
+        return Section.toStream().toList();
     }
 }
