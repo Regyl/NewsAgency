@@ -28,6 +28,4 @@ public class AnnouncementDtoResponse extends AbstractDtoResponse {
 
     private Location location;
 
-    private UserDtoResponse user;
-
 }
