@@ -20,7 +20,4 @@ public class UserDto {
 
     @NotNull
     private String lastName;
-
-    @NotNull
-    private Set<Role> authorities;
 }
