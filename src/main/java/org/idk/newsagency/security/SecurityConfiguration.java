@@ -29,9 +29,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers(
                         "/sign-in"
                 ).permitAll()
-                .antMatchers(HttpMethod.DELETE, "/announcements/**").hasAnyAuthority(Role.ADMIN.name())
-                .antMatchers(HttpMethod.POST, "/announcements/**").hasAnyAuthority(Role.ADMIN.name())
-                .antMatchers(HttpMethod.PUT, "/announcements/**").hasAnyAuthority(Role.ADMIN.name())
+                .antMatchers(HttpMethod.DELETE, "/announcements/**").hasAnyAuthority(Role.ADMIN.name(), Role.USER.name())
+                .antMatchers(HttpMethod.POST, "/announcements/**").hasAnyAuthority(Role.ADMIN.name(), Role.USER.name())
+                .antMatchers(HttpMethod.PUT, "/announcements/**").hasAnyAuthority(Role.ADMIN.name(), Role.USER.name())
+                .antMatchers("/announcements/moderation").hasAnyAuthority(Role.ADMIN.name(), Role.MODERATOR.name())
+                .antMatchers(HttpMethod.GET, "/info").hasAnyAuthority(Role.ADMIN.name(), Role.USER.name())
                 .and()
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
     }

@@ -11,6 +11,11 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class OpenApiConfig {
 
+    /*static {
+        SpringDocUtils.getConfig().replaceParameterObjectWithClass(org.springframework.data.domain.Pageable.class, org.springdoc.core.converters.models.Pageable.class)
+                .replaceParameterObjectWithClass(org.springframework.data.domain.PageRequest.class, org.springdoc.core.converters.models.Pageable.class);
+    }*/
+
     static {
         SpringDocUtils.getConfig().replaceWithClass(org.springframework.data.domain.Pageable.class,
                 org.springdoc.core.converters.models.Pageable.class);

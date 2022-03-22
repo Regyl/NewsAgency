@@ -5,6 +5,7 @@ import org.idk.newsagency.api.controller.dto.request.UserDto;
 import org.idk.newsagency.api.controller.dto.response.UserDtoResponse;
 import org.idk.newsagency.entity.Authority;
 import org.idk.newsagency.entity.User;
+import org.idk.newsagency.entity.enumeration.Role;
 import org.idk.newsagency.service.AuthorityService;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -27,7 +28,8 @@ public class UserMapper extends AbstractMapper<User, UserDto> {
     public User toEntity(UserDto dto) {
         User user = mapper.map(dto, User.class);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        Set<Authority> authorities = Set.of(authorityService.findByRole(dto.getAuthorities().stream().findFirst().get())); //TODO: fix
+//        Set<Authority> authorities = Set.of(authorityService.findByRole(dto.getAuthorities().stream().findFirst().get())); //TODO: fix
+        Set<Authority> authorities = Set.of(authorityService.findByRole(Role.USER));
         user.setAuthorities(authorities);
         return user;
     }
