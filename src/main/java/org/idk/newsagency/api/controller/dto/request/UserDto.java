@@ -17,9 +17,7 @@ public class UserDto {
     @NotNull
     private String password;
 
-    @NotNull
     private String firstName;
 
-    @NotNull
     private String lastName;
 }

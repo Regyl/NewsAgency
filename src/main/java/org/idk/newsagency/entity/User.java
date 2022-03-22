@@ -28,17 +28,15 @@ public class User extends AbstractEntity implements UserDetails {
     @Column(nullable = false)
     private String password;
 
-    @NotNull
-    @Column(nullable = false)
     private String firstName;
 
-    @NotNull
-    @Column(nullable = false)
     private String lastName;
 
     @NotNull
     @Column(columnDefinition = "BOOLEAN DEFAULT false", nullable = false)
     private Boolean emailVerified;
+
+    private String temporaryKey;
 
     @OneToMany(orphanRemoval = true)
     private Set<Announcement> announcements;

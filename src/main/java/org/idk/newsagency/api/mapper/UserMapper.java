@@ -38,4 +38,12 @@ public class UserMapper extends AbstractMapper<User, UserDto> {
     public UserDtoResponse toDto(User dto) {
         return mapper.map(dto, UserDtoResponse.class);
     }
+
+    public void verify(User user) {
+        user.getAuthorities().clear();
+        user.getAuthorities().add(authorityService.findByRole(Role.USER));
+
+        user.setTemporaryKey(null);
+        user.setEmailVerified(true);
+    }
 }
