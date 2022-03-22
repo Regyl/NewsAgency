@@ -64,4 +64,5 @@ public class UserController {
         User user = Utils.getAuthenticatedUser();
         return userMapper.toDto(user);
     }
+
 }

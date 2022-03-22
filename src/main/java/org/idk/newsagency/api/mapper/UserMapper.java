@@ -28,8 +28,8 @@ public class UserMapper extends AbstractMapper<User, UserDto> {
     public User toEntity(UserDto dto) {
         User user = mapper.map(dto, User.class);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-//        Set<Authority> authorities = Set.of(authorityService.findByRole(dto.getAuthorities().stream().findFirst().get())); //TODO: fix
-        Set<Authority> authorities = Set.of(authorityService.findByRole(Role.USER));
+        Set<Authority> authorities = Set.of(authorityService.findByRole(Role.UNVERIFIED_USER));
+        user.setEmailVerified(false);
         user.setAuthorities(authorities);
         return user;
     }

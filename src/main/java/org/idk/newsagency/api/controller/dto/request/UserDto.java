@@ -3,6 +3,7 @@ package org.idk.newsagency.api.controller.dto.request;
 import lombok.Data;
 import org.idk.newsagency.entity.enumeration.Role;
 
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import java.util.Set;
 
@@ -10,6 +11,7 @@ import java.util.Set;
 public class UserDto {
 
     @NotNull
+    @Email(message = "login must be an email")
     private String login;
 
     @NotNull

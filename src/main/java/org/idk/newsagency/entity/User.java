@@ -36,6 +36,10 @@ public class User extends AbstractEntity implements UserDetails {
     @Column(nullable = false)
     private String lastName;
 
+    @NotNull
+    @Column(columnDefinition = "BOOLEAN DEFAULT false", nullable = false)
+    private Boolean emailVerified;
+
     @OneToMany(orphanRemoval = true)
     private Set<Announcement> announcements;
 
