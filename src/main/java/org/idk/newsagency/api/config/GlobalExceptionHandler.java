@@ -13,12 +13,12 @@ import java.util.Map;
 public class GlobalExceptionHandler {
 
 
-    @ExceptionHandler(RuntimeException.class)
+    /*@ExceptionHandler(RuntimeException.class)
     @ResponseStatus(HttpStatus.UNAVAILABLE_FOR_LEGAL_REASONS)
     public Map<String, Object> handleRuntimeException(RuntimeException e) {
         Map<String, Object> body = new HashMap<>(3);
         body.put("timestamp", LocalDateTime.now());
         body.put("message", e.getMessage());
         return body;
-    }
+    }*/
 }

@@ -19,6 +19,8 @@ public class UserDtoResponse extends AbstractDtoResponse {
 
     private String lastName;
 
+    private Boolean emailVerified;
+
     private Set<AuthorityDtoResponse> authorities;
 
     @Data

@@ -14,3 +14,7 @@
 docker run regyl/news-agency:latest
 docker-compose up -d
 ````
+
+### Потенциальные дыры
+Путь к верификации почты не защищен
+Credentials надо перенести

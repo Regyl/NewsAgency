@@ -10,4 +10,6 @@ public interface UserRepository extends AbstractRepository<User> {
 
     Optional<User> findByLogin(String login);
 
+    Optional<User> findByTemporaryKey(String key);
+
 }

@@ -1,6 +1,8 @@
 package org.idk.newsagency.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.idk.newsagency.entity.enumeration.Role;
 import org.springframework.security.core.GrantedAuthority;
 
@@ -11,6 +13,8 @@ import javax.validation.constraints.NotNull;
 
 @Data
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
 public class Authority extends AbstractEntity implements GrantedAuthority {
 
     @NotNull

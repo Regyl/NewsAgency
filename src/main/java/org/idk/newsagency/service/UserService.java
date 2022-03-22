@@ -22,4 +22,9 @@ public class UserService {
     public User save(User user) {
         return repository.save(user);
     }
+
+    public User findByTemporaryKey(String key) {
+        return repository.findByTemporaryKey(key)
+                .orElseThrow(RuntimeException::new); //fixme
+    }
 }

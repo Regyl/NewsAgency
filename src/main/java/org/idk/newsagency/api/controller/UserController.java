@@ -9,6 +9,7 @@ import org.idk.newsagency.api.controller.dto.response.CredentialsResponse;
 import org.idk.newsagency.api.controller.dto.response.UserDtoResponse;
 import org.idk.newsagency.api.mapper.UserMapper;
 import org.idk.newsagency.entity.User;
+import org.idk.newsagency.mail.EmailService;
 import org.idk.newsagency.security.service.JwtProvider;
 import org.idk.newsagency.service.UserService;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -16,11 +17,13 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
+import java.util.UUID;
 
 @Tag(name = "Authorization")
 @Validated
@@ -31,15 +34,18 @@ public class UserController {
     private final JwtProvider jwtProvider;
     private final UserService userService;
     private final UserMapper userMapper;
+    private final EmailService emailService;
 
     public UserController(AuthenticationManager authenticationManager,
                           JwtProvider jwtProvider,
                           UserService userService,
-                          UserMapper userMapper) {
+                          UserMapper userMapper,
+                          EmailService emailService) {
         this.authenticationManager = authenticationManager;
         this.jwtProvider = jwtProvider;
         this.userService = userService;
         this.userMapper = userMapper;
+        this.emailService = emailService;
     }
 
     @PostMapping("/sign-in")
@@ -55,6 +61,10 @@ public class UserController {
     @Operation(summary = "Registration")
     public UserDtoResponse signUp(@RequestBody @Valid UserDto dto) {
         User user = userMapper.toEntity(dto);
+        String temporaryKey = UUID.randomUUID().toString();
+        user.setTemporaryKey(temporaryKey);
+        emailService.doSend(dto.getLogin(),
+                "Glad to see you!", "http://195.2.214.167:8082/auth/"+temporaryKey); //fixme сделать профили и запускать с параметрами
         user = userService.save(user);
         return userMapper.toDto(user);
     }
@@ -64,4 +74,12 @@ public class UserController {
         User user = Utils.getAuthenticatedUser();
         return userMapper.toDto(user);
     }
+
+    @GetMapping("/auth/{value}")
+    public void verifyEmail(@PathVariable String value) {
+        User user = userService.findByTemporaryKey(value);
+        userMapper.verify(user);
+        userService.save(user);
+    }
+
 }
