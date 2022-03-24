@@ -70,6 +70,7 @@ public class UserController {
     }
 
     @GetMapping("/info")
+    @Operation(summary = "Account information")
     public UserDtoResponse getData() {
         User user = Utils.getAuthenticatedUser();
         return userMapper.toDto(user);
