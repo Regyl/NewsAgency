@@ -9,6 +9,7 @@ import org.idk.newsagency.api.controller.dto.response.CredentialsResponse;
 import org.idk.newsagency.api.controller.dto.response.UserDtoResponse;
 import org.idk.newsagency.api.mapper.UserMapper;
 import org.idk.newsagency.entity.User;
+import org.idk.newsagency.exception.EntityAlreadyExistsException;
 import org.idk.newsagency.mail.EmailService;
 import org.idk.newsagency.security.service.JwtProvider;
 import org.idk.newsagency.service.UserService;
@@ -60,6 +61,11 @@ public class UserController {
     @PostMapping("/sign-up")
     @Operation(summary = "Registration")
     public UserDtoResponse signUp(@RequestBody @Valid UserDto dto) {
+
+        if(userService.ifExists(dto.getLogin())) {
+            throw new EntityAlreadyExistsException(dto.getLogin());
+        }
+
         User user = userMapper.toEntity(dto);
         String temporaryKey = UUID.randomUUID().toString();
         user.setTemporaryKey(temporaryKey);

@@ -12,4 +12,6 @@ public interface UserRepository extends AbstractRepository<User> {
 
     Optional<User> findByTemporaryKey(String key);
 
+    boolean existsByLogin(String login);
+
 }

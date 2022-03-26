@@ -19,6 +19,10 @@ public class UserService {
                 .orElseThrow(EntityNotFoundException.supplierOf(login));
     }
 
+    public boolean ifExists(String login) {
+        return repository.existsByLogin(login);
+    }
+
     public User save(User user) {
         return repository.save(user);
     }
