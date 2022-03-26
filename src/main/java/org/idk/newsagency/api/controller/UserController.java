@@ -63,7 +63,7 @@ public class UserController {
     public UserDtoResponse signUp(@RequestBody @Valid UserDto dto) {
 
         if(userService.ifExists(dto.getLogin())) {
-            throw new EntityAlreadyExistsException(dto.getLogin());
+            throw new EntityAlreadyExistsException(User.class, dto.getLogin());
         }
 
         User user = userMapper.toEntity(dto);
