@@ -35,4 +35,8 @@ public class AnnouncementService {
     public List<Announcement> findAll() {
         return repository.findAll();
     }
+
+    public void saveAll(List<Announcement> announcements) {
+        repository.saveAll(announcements);
+    }
 }

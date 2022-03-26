@@ -1,8 +1,8 @@
 package org.idk.newsagency;
 
-import org.idk.newsagency.api.controller.dto.request.UserDto;
 import org.idk.newsagency.entity.Announcement;
 import org.idk.newsagency.entity.Authority;
+import org.idk.newsagency.entity.Location;
 import org.idk.newsagency.entity.User;
 import org.idk.newsagency.entity.enumeration.Role;
 import org.idk.newsagency.entity.enumeration.Section;
@@ -14,6 +14,8 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import java.util.List;
+import java.util.Set;
+import java.util.UUID;
 
 @Component
 public record Init(AuthorityService authorityService, AnnouncementService announcementService,
@@ -28,22 +30,37 @@ public record Init(AuthorityService authorityService, AnnouncementService announ
                 Authority authority = new Authority(role);
                 authorities.add(authority);
             }
-            authorityService.saveAll(authorities);
+            authorities = authorityService.saveAll(authorities);
         }
 
-        User user = new User();
+        String login = "crocodile01@gmail.com";
+        User user;
+        if(!userService.isExists(login)) {
+            user = new User();
+            user.setEmailVerified(true);
+            user.setAuthorities(Set.copyOf(authorities));
+            user.setLogin(login);
+            user.setPassword("not-a-password");
+            user = userService.save(user);
+        } else {
+            user = userService.findByLogin(login);
+        }
 
 
         List<Announcement> announcements = announcementService.findAll();
         if(announcements.isEmpty()) {
             for(int i=0; i<5; i++) {
                 Announcement announcement = new Announcement();
-                announcement.setHeader("Название" + i);
-                announcement.setDescription("Какое-то относительно небольшое описание" + i);
+                announcement.setHeader("Название " + i);
+                announcement.setDescription("Какое-то относительно небольшое описание " + i);
                 announcement.setStatus(Status.PUBLISHED);
                 announcement.setSection(Section.random());
-                announcement.setUser();
+                announcement.setUser(user);
+                announcement.setText(UUID.randomUUID().toString() + " I-don't-know " + UUID.randomUUID().toString());
+                announcement.setLocation(new Location(55.874616, 37.513198));
+                announcements.add(announcement);
             }
+            announcementService.saveAll(announcements);
         }
     }
 }

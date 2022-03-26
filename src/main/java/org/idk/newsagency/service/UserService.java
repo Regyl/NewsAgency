@@ -6,20 +6,14 @@ import org.idk.newsagency.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
 @Service
-public class UserService {
-
-    private final UserRepository repository;
-
-    public UserService(UserRepository repository) {
-        this.repository = repository;
-    }
+public record UserService(UserRepository repository) {
 
     public User findByLogin(String login) {
         return repository.findByLogin(login)
                 .orElseThrow(EntityNotFoundException.supplierOf(login));
     }
 
-    public boolean ifExists(String login) {
+    public boolean isExists(String login) {
         return repository.existsByLogin(login);
     }
 

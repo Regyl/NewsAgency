@@ -16,9 +16,9 @@ public class Location {
 
     @NotNull
     @Column(nullable = false)
-    private Long latitude;
+    private Double latitude;
 
     @NotNull
     @Column(nullable = false)
-    private Long longitude;
+    private Double longitude;
 }

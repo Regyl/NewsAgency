@@ -27,7 +27,7 @@ public class AnnouncementMapper extends AbstractMapper<Announcement, Announcemen
         try {
             String image = Base64.getEncoder().encodeToString(dto.getImage().getBytes());
             announcement.setImage(image);
-        } catch (IOException e) {
+        } catch (IOException | NullPointerException e) {
             log.warning(e.getMessage());
         }
 
@@ -40,7 +40,9 @@ public class AnnouncementMapper extends AbstractMapper<Announcement, Announcemen
     @Override
     public AnnouncementDtoResponse toDto(Announcement announcement) {
         AnnouncementDtoResponse response = mapper.map(announcement, AnnouncementDtoResponse.class);
-        response.setImage(Base64.getDecoder().decode(announcement.getImage()));
+        if(announcement.getImage() != null) {
+            response.setImage(Base64.getDecoder().decode(announcement.getImage()));
+        }
         return response;
     }
 }

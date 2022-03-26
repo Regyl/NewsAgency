@@ -9,13 +9,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class AuthorityService {
-
-    private final AuthorityRepository repository;
-
-    public AuthorityService(AuthorityRepository repository) {
-        this.repository = repository;
-    }
+public record AuthorityService(AuthorityRepository repository) {
 
     public Authority findByRole(Role role) {
         return repository.findByRole(role)
@@ -26,7 +20,7 @@ public class AuthorityService {
         return repository.findAll();
     }
 
-    public void saveAll(List<Authority> authorities) {
-        repository.saveAll(authorities);
+    public List<Authority> saveAll(List<Authority> authorities) {
+        return repository.saveAll(authorities);
     }
 }

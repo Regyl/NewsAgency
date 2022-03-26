@@ -62,7 +62,7 @@ public class UserController {
     @Operation(summary = "Registration")
     public UserDtoResponse signUp(@RequestBody @Valid UserDto dto) {
 
-        if(userService.ifExists(dto.getLogin())) {
+        if(userService.isExists(dto.getLogin())) {
             throw new EntityAlreadyExistsException(User.class, dto.getLogin());
         }
 

@@ -25,14 +25,13 @@ public class AnnouncementDto {
     @NotNull
     private String text;
 
-    @NotNull
     private MultipartFile image;
 
     @NotNull
-    private Long latitude;
+    private Double latitude;
 
     @NotNull
-    private Long longitude;
+    private Double longitude;
 
     /*@JsonIgnore TODO:
     private LocationDto location;
