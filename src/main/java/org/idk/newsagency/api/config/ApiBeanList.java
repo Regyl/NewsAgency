@@ -11,8 +11,8 @@ public class ApiBeanList {
     public ModelMapper mapper() {
         ModelMapper mapper = new ModelMapper();
         mapper.getConfiguration()
-                .setFieldMatchingEnabled(true)
-                .setAmbiguityIgnored(true);
+                .setFieldMatchingEnabled(true);
+//                .setAmbiguityIgnored(true);
         return mapper;
     }
 }

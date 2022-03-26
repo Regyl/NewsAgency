@@ -6,6 +6,7 @@ import org.idk.newsagency.entity.enumeration.Status;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.NotNull;
+import java.util.UUID;
 
 @Data
 public class AnnouncementDto {

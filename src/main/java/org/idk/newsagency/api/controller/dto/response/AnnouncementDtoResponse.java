@@ -26,6 +26,8 @@ public class AnnouncementDtoResponse extends AbstractDtoResponse {
 
     private byte[] image;
 
+    private UUID userId;
+
     private Location location;
 
 }

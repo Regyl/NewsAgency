@@ -2,6 +2,7 @@ package org.idk.newsagency.api.controller.dto.request;
 
 import lombok.Data;
 import org.idk.newsagency.entity.enumeration.Role;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
@@ -20,4 +21,6 @@ public class UserDto {
     private String firstName;
 
     private String lastName;
+
+    private MultipartFile avatar;
 }
