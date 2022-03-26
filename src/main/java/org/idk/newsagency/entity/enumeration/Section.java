@@ -2,6 +2,8 @@ package org.idk.newsagency.entity.enumeration;
 
 import lombok.Getter;
 
+import java.util.List;
+import java.util.Random;
 import java.util.stream.Stream;
 
 @Getter
@@ -23,5 +25,11 @@ public enum Section {
 
     public static Stream<Section> toStream() {
         return Stream.of(Section.values());
+    }
+
+    public static Section random() {
+        List<Section> sections = toStream().toList();
+        return sections.get(
+                new Random().nextInt(sections.size()));
     }
 }
