@@ -12,6 +12,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
+import java.util.HashSet;
 import java.util.Set;
 
 @Data
@@ -53,9 +54,9 @@ public class Announcement extends AbstractEntity {
     private User user;
 
     @OneToMany(mappedBy = "announcement")
-    private Set<Like> likes;
+    private Set<Like> likes = new HashSet<>();
 
     @OneToMany(mappedBy = "announcement")
-    private Set<Comment> comments;
+    private Set<Comment> comments = new HashSet<>();
 
 }
