@@ -19,7 +19,7 @@ jib {
     }
 }
 
-group = 'org.idk'
+group = 'com.deepspace'
 version = '0.0.1'
 sourceCompatibility = '17'
 
