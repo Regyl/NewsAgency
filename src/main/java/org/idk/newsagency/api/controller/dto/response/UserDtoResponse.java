@@ -3,6 +3,7 @@ package org.idk.newsagency.api.controller.dto.response;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.idk.newsagency.entity.enumeration.Role;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Set;
 import java.util.UUID;
@@ -20,6 +21,8 @@ public class UserDtoResponse extends AbstractDtoResponse {
     private String lastName;
 
     private Boolean emailVerified;
+
+    private MultipartFile avatar;
 
     private Set<AuthorityDtoResponse> authorities;
 
