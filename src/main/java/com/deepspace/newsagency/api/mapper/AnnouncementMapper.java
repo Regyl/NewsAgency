@@ -45,6 +45,7 @@ public class AnnouncementMapper extends AbstractMapper<Announcement, Announcemen
         }
 
         response.setLikeQuantity(announcement.getLikes().size());
+        response.setCommentQuantity(announcement.getComments().size());
         return response;
     }
 }

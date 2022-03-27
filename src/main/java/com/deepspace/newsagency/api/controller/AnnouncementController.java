@@ -2,12 +2,16 @@ package com.deepspace.newsagency.api.controller;
 
 import com.deepspace.newsagency.api.controller.dto.request.AnnouncementDto;
 import com.deepspace.newsagency.api.controller.dto.response.AnnouncementDtoResponse;
+import com.deepspace.newsagency.api.controller.dto.response.CommentDtoResponse;
 import com.deepspace.newsagency.api.controller.dto.response.LikeDtoResponse;
+import com.deepspace.newsagency.api.mapper.CommentMapper;
 import com.deepspace.newsagency.api.mapper.LikeMapper;
 import com.deepspace.newsagency.entity.Announcement;
+import com.deepspace.newsagency.entity.Comment;
 import com.deepspace.newsagency.entity.Like;
 import com.deepspace.newsagency.entity.User;
 import com.deepspace.newsagency.entity.enumeration.Section;
+import com.deepspace.newsagency.service.CommentService;
 import com.deepspace.newsagency.service.LikeService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -25,11 +29,13 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.UUID;
@@ -43,13 +49,18 @@ public class AnnouncementController {
     private final AnnouncementMapper mapper;
     private final LikeService likeService;
     private final LikeMapper likeMapper;
+    private final CommentMapper commentMapper;
+    private final CommentService commentService;
 
     public AnnouncementController(AnnouncementService service, AnnouncementMapper mapper,
-                                  LikeService likeService, LikeMapper likeMapper) {
+                                  LikeService likeService, LikeMapper likeMapper,
+                                  CommentMapper commentMapper, CommentService commentService) {
         this.service = service;
         this.mapper = mapper;
         this.likeService = likeService;
         this.likeMapper = likeMapper;
+        this.commentMapper = commentMapper;
+        this.commentService = commentService;
     }
 
     @PostMapping(value = "/", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
@@ -76,7 +87,7 @@ public class AnnouncementController {
                 .map(mapper::toDto);
     }
 
-    @PutMapping("/likes/{id}")
+    @PostMapping("/likes/{id}")
     @Operation(summary = "Like announcement")
     public void likeAnnouncement(@PathVariable UUID id) {
         Announcement announcement = service.findById(id);
@@ -110,5 +121,26 @@ public class AnnouncementController {
         return likeService.findAllByAnnouncementId(id).stream()
                 .map(likeMapper::toDto)
                 .toList();
+    }
+
+    @GetMapping("/comments/{id}")
+    @Operation(summary = "Return announcement comments by id")
+    public List<CommentDtoResponse> getCommentsById(@PathVariable UUID id) {
+        return commentService.findAllByAnnouncementId(id).stream()
+                .map(commentMapper::toDto)
+                .toList();
+    }
+
+    @PostMapping("/comments/{id}")
+    @Operation(summary = "Set the comment")
+    public void saveComment(@PathVariable UUID id, @RequestParam @NotBlank String text) {
+        Announcement announcement = service.findById(id);
+        User user = Utils.getAuthenticatedUser();
+
+        Comment comment = new Comment();
+        comment.setAnnouncement(announcement);
+        comment.setUser(user);
+        comment.setText(text);
+        commentService.save(comment);
     }
 }

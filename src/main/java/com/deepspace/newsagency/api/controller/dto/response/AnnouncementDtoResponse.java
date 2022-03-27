@@ -32,4 +32,5 @@ public class AnnouncementDtoResponse extends AbstractDtoResponse {
 
     private int likeQuantity;
 
+    private int commentQuantity;
 }

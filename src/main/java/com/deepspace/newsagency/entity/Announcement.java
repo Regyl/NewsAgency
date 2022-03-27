@@ -16,7 +16,7 @@ import java.util.Set;
 
 @Data
 @Entity
-@EqualsAndHashCode(exclude = {"likes"})
+@EqualsAndHashCode(exclude = {"likes", "comments"})
 public class Announcement extends AbstractEntity {
 
     @NotNull
@@ -54,5 +54,8 @@ public class Announcement extends AbstractEntity {
 
     @OneToMany(mappedBy = "announcement")
     private Set<Like> likes;
+
+    @OneToMany(mappedBy = "announcement")
+    private Set<Comment> comments;
 
 }
