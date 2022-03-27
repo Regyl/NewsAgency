@@ -17,6 +17,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -49,7 +50,7 @@ public class AnnouncementController {
     @PostMapping(value = "/", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
     @ResponseStatus(HttpStatus.CREATED)
     @Operation(summary = "Create announcement")
-    public AnnouncementDtoResponse create(@RequestBody @Valid AnnouncementDto dto) {
+    public AnnouncementDtoResponse create(@ModelAttribute AnnouncementDto dto) {
         Announcement announcement = mapper.toEntity(dto);
         announcement = service.save(announcement);
         return mapper.toDto(announcement);
