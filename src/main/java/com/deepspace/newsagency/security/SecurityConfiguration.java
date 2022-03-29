@@ -1,7 +1,7 @@
 package com.deepspace.newsagency.security;
 
 import com.deepspace.newsagency.entity.enumeration.Role;
-import com.deepspace.newsagency.security.filter.JwtFilter;
+import com.deepspace.newsagency.security.jwt.JwtFilter;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;

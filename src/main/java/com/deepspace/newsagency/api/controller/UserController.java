@@ -11,7 +11,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import com.deepspace.newsagency.Utils;
 import com.deepspace.newsagency.api.mapper.UserMapper;
 import com.deepspace.newsagency.mail.EmailService;
-import com.deepspace.newsagency.security.service.JwtProvider;
+import com.deepspace.newsagency.security.jwt.JwtProvider;
 import com.deepspace.newsagency.service.UserService;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

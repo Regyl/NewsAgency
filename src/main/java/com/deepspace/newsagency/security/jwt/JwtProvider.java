@@ -1,4 +1,4 @@
-package com.deepspace.newsagency.security.service;
+package com.deepspace.newsagency.security.jwt;
 
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.JwtParser;

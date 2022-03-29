@@ -1,7 +1,5 @@
-package com.deepspace.newsagency.security.filter;
+package com.deepspace.newsagency.security.jwt;
 
-import com.deepspace.newsagency.security.service.JwtProvider;
-import org.springframework.lang.NonNullApi;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
