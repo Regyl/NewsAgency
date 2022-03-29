@@ -33,6 +33,10 @@ public class User extends AbstractEntity implements UserDetails {
     private String lastName;
 
     @NotNull
+    @Column(nullable = false)
+    private String refreshToken;
+
+    @NotNull
     @Column(columnDefinition = "BOOLEAN DEFAULT false", nullable = false)
     private Boolean emailVerified;
 

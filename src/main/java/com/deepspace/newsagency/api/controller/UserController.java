@@ -13,6 +13,7 @@ import com.deepspace.newsagency.api.mapper.UserMapper;
 import com.deepspace.newsagency.mail.EmailService;
 import com.deepspace.newsagency.security.jwt.JwtProvider;
 import com.deepspace.newsagency.service.UserService;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
@@ -36,12 +38,15 @@ public class UserController {
     private final UserService userService;
     private final UserMapper userMapper;
     private final EmailService emailService;
+    private final long tokenLifetime;
 
-    public UserController(AuthenticationManager authenticationManager,
+    public UserController(@Value("${jwt.tokenLifetime}") Long tokenLifetime,
+                          AuthenticationManager authenticationManager,
                           JwtProvider jwtProvider,
                           UserService userService,
                           UserMapper userMapper,
                           EmailService emailService) {
+        this.tokenLifetime = tokenLifetime;
         this.authenticationManager = authenticationManager;
         this.jwtProvider = jwtProvider;
         this.userService = userService;
@@ -49,19 +54,24 @@ public class UserController {
         this.emailService = emailService;
     }
 
+    @PostMapping("/refresh")
+    @Operation(summary = "Get new access/refresh tokens")
+    public CredentialsResponse refreshToken(@RequestParam String refreshToken) {
+
+    }
+
     @PostMapping("/sign-in")
     @Operation(summary = "Authorization")
     public CredentialsResponse signIn(@RequestBody @Valid Credentials credentials) {
         Authentication auth = new UsernamePasswordAuthenticationToken(credentials.getLogin(), credentials.getPassword());
         authenticationManager.authenticate(auth);
-        String token = jwtProvider.generateToken(credentials.getLogin());
-        return CredentialsResponse.of(token);
+        String token = jwtProvider.generateAccessToken(credentials.getLogin());
+        return CredentialsResponse.of(token, tokenLifetime);
     }
 
     @PostMapping("/sign-up")
     @Operation(summary = "Registration")
     public UserDtoResponse signUp(@RequestBody @Valid UserDto dto) {
-
         if(userService.isExists(dto.getLogin())) {
             throw new EntityAlreadyExistsException(User.class, dto.getLogin());
         }

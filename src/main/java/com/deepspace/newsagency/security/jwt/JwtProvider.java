@@ -29,44 +29,36 @@ public class JwtProvider {
 
     private static final String BEARER = "Bearer";
 
+    private final long refreshTokenLifetime;
     private final long tokenLifetime;
     private final Key key;
     private final JwtParser parser;
     private final UserDetailsService userDetailsService;
 
     public JwtProvider(@Value("${jwt.secret}") String jwtSecret,
-                       @Value("${tokenLifetime}") Long tokenLifetime, //in minutes
+                       @Value("${jwt.tokenLifetime}") Long tokenLifetime, //in hours
+                       @Value("${jwt.refresh.tokenLifetime}") Long refreshTokenLifetime, //in hours
                        UserDetailsService userDetailsService) {
+
         this.tokenLifetime = tokenLifetime;
+        this.refreshTokenLifetime = refreshTokenLifetime;
 
         this.key = Keys.hmacShaKeyFor(jwtSecret.getBytes(StandardCharsets.UTF_8));
         this.parser = Jwts.parserBuilder().setSigningKey(this.key).build();
         this.userDetailsService = userDetailsService;
     }
 
-    public String generateToken(String login) {
-        LocalDateTime now = new Date().toInstant().atZone(ZoneOffset.UTC).toLocalDateTime();
-        LocalDateTime expireAt = now.plusMinutes(tokenLifetime);
-        Date expiration = Date.from(expireAt.toInstant(ZoneOffset.UTC));
+    public String generateRefreshToken(String username) {
+        return generateToken(username, refreshTokenLifetime);
+    }
 
-        return Jwts.builder()
-                .setSubject(login)
-                .setExpiration(expiration)
-                .signWith(key)
-                .setId(UUID.randomUUID().toString())
-                .compact();
+    public String generateAccessToken(String username) {
+        return generateToken(username, tokenLifetime);
     }
 
     public void validateToken(String token)
             throws ExpiredJwtException, UnsupportedJwtException, MalformedJwtException, SignatureException, IllegalArgumentException {
         parser.parseClaimsJws(token);
-    }
-
-    public String getLoginFromToken(String token) {
-        return parser
-                .parseClaimsJws(token)
-                .getBody()
-                .getSubject();
     }
 
     @Nullable
@@ -79,9 +71,28 @@ public class JwtProvider {
         }
     }
 
-    public Authentication getAuthentication(String login) {
+    public Authentication getAuthentication(String token) {
+        String login = getLoginFromToken(token);
         UserDetails userDetails = userDetailsService.loadUserByUsername(login);
         return new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
     }
 
+    private String generateToken(String username, long expiration) {
+        LocalDateTime now = new Date().toInstant().atZone(ZoneOffset.UTC).toLocalDateTime();
+        LocalDateTime expireAt = now.plusHours(expiration);
+        Date expirationDate = Date.from(expireAt.toInstant(ZoneOffset.UTC));
+
+        return Jwts.builder()
+                .setSubject(username)
+                .setExpiration(expirationDate)
+                .signWith(key)
+                .compact();
+    }
+
+    private String getLoginFromToken(String token) {
+        return parser
+                .parseClaimsJws(token)
+                .getBody()
+                .getSubject();
+    }
 }
