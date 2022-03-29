@@ -3,10 +3,13 @@ package com.deepspace.newsagency.service;
 import com.deepspace.newsagency.entity.User;
 import com.deepspace.newsagency.exception.EntityNotFoundException;
 import com.deepspace.newsagency.repository.UserRepository;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 @Service
-public record UserService(UserRepository repository) {
+public record UserService(UserRepository repository) implements UserDetailsService {
 
     public User findByLogin(String login) {
         return repository.findByLogin(login)
@@ -23,6 +26,11 @@ public record UserService(UserRepository repository) {
 
     public User findByTemporaryKey(String key) {
         return repository.findByTemporaryKey(key)
-                .orElseThrow(RuntimeException::new); //fixme
+                .orElseThrow(EntityNotFoundException.supplierOf(key));
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) {
+        return findByLogin(username);
     }
 }

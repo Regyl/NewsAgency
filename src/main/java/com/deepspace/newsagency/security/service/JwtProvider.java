@@ -13,6 +13,7 @@ import org.springframework.lang.Nullable;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
@@ -31,11 +32,11 @@ public class JwtProvider {
     private final long tokenLifetime;
     private final Key key;
     private final JwtParser parser;
-    private final CustomUserDetailsService userDetailsService;
+    private final UserDetailsService userDetailsService;
 
     public JwtProvider(@Value("${jwt.secret}") String jwtSecret,
                        @Value("${tokenLifetime}") Long tokenLifetime, //in minutes
-                       CustomUserDetailsService userDetailsService) {
+                       UserDetailsService userDetailsService) {
         this.tokenLifetime = tokenLifetime;
 
         this.key = Keys.hmacShaKeyFor(jwtSecret.getBytes(StandardCharsets.UTF_8));
@@ -56,10 +57,9 @@ public class JwtProvider {
                 .compact();
     }
 
-    public boolean validateToken(String token)
+    public void validateToken(String token)
             throws ExpiredJwtException, UnsupportedJwtException, MalformedJwtException, SignatureException, IllegalArgumentException {
         parser.parseClaimsJws(token);
-        return true;
     }
 
     public String getLoginFromToken(String token) {

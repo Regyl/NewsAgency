@@ -63,7 +63,7 @@ public class AnnouncementController {
         this.commentService = commentService;
     }
 
-    @PostMapping(value = "/", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
+    @PostMapping(value = "/", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE, MediaType.APPLICATION_JSON_VALUE})
     @ResponseStatus(HttpStatus.CREATED)
     @Operation(summary = "Create announcement")
     public AnnouncementDtoResponse create(@ModelAttribute AnnouncementDto dto) {
