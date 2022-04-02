@@ -26,9 +26,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
-                .antMatchers(
-                        "/sign-in"
-                ).permitAll()
+                .antMatchers("/sign-in", "/refresh").permitAll()
                 .antMatchers(HttpMethod.DELETE, "/announcements/**").hasAnyAuthority(Role.ADMIN.name(), Role.USER.name())
                 .antMatchers(HttpMethod.POST, "/announcements/**").hasAnyAuthority(Role.ADMIN.name(), Role.USER.name())
                 .antMatchers(HttpMethod.PUT, "/announcements/**").hasAnyAuthority(Role.ADMIN.name(), Role.USER.name())

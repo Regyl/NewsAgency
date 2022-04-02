@@ -33,4 +33,9 @@ public record UserService(UserRepository repository) implements UserDetailsServi
     public UserDetails loadUserByUsername(String username) {
         return findByLogin(username);
     }
+
+    public User findByRefreshToken(String refreshToken) {
+        return repository.findByRefreshTokenLike(refreshToken)
+                .orElseThrow(EntityNotFoundException.supplierOf(refreshToken));
+    }
 }
