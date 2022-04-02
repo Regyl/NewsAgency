@@ -32,8 +32,7 @@ public class User extends AbstractEntity implements UserDetails {
 
     private String lastName;
 
-    @NotNull
-    @Column(nullable = false)
+    @Column(unique = true)
     private String refreshToken;
 
     @NotNull

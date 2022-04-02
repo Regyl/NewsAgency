@@ -7,6 +7,7 @@ import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.UnsupportedJwtException;
 import io.jsonwebtoken.security.Keys;
 import io.jsonwebtoken.security.SignatureException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.lang.Nullable;
@@ -24,6 +25,7 @@ import java.time.ZoneOffset;
 import java.util.Date;
 import java.util.UUID;
 
+@Slf4j
 @Service
 public class JwtProvider {
 
@@ -71,9 +73,8 @@ public class JwtProvider {
         }
     }
 
-    public Authentication getAuthentication(String token) {
-        String login = getLoginFromToken(token);
-        UserDetails userDetails = userDetailsService.loadUserByUsername(login);
+    public Authentication getAuthentication(String token) {;
+        UserDetails userDetails = userDetailsService.loadUserByUsername(token);
         return new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
     }
 
@@ -89,7 +90,7 @@ public class JwtProvider {
                 .compact();
     }
 
-    private String getLoginFromToken(String token) {
+    public String getLoginFromToken(String token) {
         return parser
                 .parseClaimsJws(token)
                 .getBody()

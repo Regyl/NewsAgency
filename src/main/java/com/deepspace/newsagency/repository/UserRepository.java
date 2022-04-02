@@ -14,4 +14,6 @@ public interface UserRepository extends AbstractRepository<User> {
 
     boolean existsByLogin(String login);
 
+    Optional<User> findByRefreshTokenLike(String refreshToken);
+
 }

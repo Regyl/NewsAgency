@@ -3,6 +3,7 @@ package com.deepspace.newsagency.api.config;
 import com.deepspace.newsagency.exception.EntityAlreadyExistsException;
 import io.jsonwebtoken.ExpiredJwtException;
 import com.deepspace.newsagency.exception.EntityNotFoundException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
